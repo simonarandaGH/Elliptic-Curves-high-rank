@@ -1,18 +1,13 @@
 # My-High-Rank-Elliptic-Curves
-Unpublished High Rank Elliptic Curves
 
-(C)2023. Simon Aranda
+(C)Oct.2023.Simon Aranda
 
-C[n,0]
+Some unpublished High Rank Elliptic Curves
 
-2020343 rank 6
+C[ n,0]  2020343 rank 6
+C[-n,0] -3129357 rank 6,  -188588857 rank 7
+and many others.
 
-C[-n,0]
-
--3129357 rank 6
-
--188588857 rank 7
-
-Work date: Oct.2023.
-
+Unpublished Conjecture 
+The number of digits of any rank n curve is: n*lg(n).
 
