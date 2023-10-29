@@ -1,0 +1,3 @@
+Unpublished Conjecture 
+
+The number of digits of any rank n curve is: n*lg(n).
