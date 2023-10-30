@@ -1,11 +1,10 @@
 
-
-\\ Ell. Curves[-A,+1] Rank 6,7,8,9.
+\\ Ell. Curves[-n^2,+1] Rank 6,7,8,9.
 \\ (C)Oct.2023.Simon Aranda
 
 The form C[-n^2,+1] gives curves with moderate rank
-at very low values of "n".
-
+at low values of "n".
+Released PARIGP script.
 
 OUTPUT
 (...)
