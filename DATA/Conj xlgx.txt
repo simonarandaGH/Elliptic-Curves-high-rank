@@ -1,6 +1,7 @@
 Deep samples: always the same shape.
 
 log10(y) = K - x*log10(x)
+
 Examples
 
 C[n,0] [n= 53*10^6.. n+10^4]
