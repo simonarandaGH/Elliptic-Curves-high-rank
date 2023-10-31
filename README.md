@@ -14,6 +14,7 @@ C[-n,0] -3129357 rank 6,  -188588857 rank 7
 
 C[-n^2,1] rank 7,8,9. And many others.
 
+250 terms of [n,0] rank 5.
 
 Unpublished Conjecture 
 
