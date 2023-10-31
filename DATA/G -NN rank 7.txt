@@ -1,4 +1,4 @@
-Exploring "g": C[-n,n]
+Exploring "G": C[-n,n]
 ======================
 
 rank 5
