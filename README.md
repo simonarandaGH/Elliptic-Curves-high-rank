@@ -4,7 +4,7 @@
 
 Some unpublished High Rank Elliptic Curves
 
-Always Short form [A,B].
+Always Short form [A,B]. (Karl Weierstrass)
 
 C[ n,0]  2020343 rank 6
 
