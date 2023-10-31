@@ -50,3 +50,12 @@ R  #n
 5  170
 6  1
 
+Conjecture rank<11
+lg(r): probability(r=digits(n)=rank(C[n]))
+
+n    lg(n)
+6    0.77
+7    0.84
+8    0.9
+10   1
+
