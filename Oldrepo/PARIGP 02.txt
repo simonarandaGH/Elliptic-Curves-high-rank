@@ -1,0 +1,79 @@
+
+\\(C)2023.Simon Aranda
+
+\\ set defaults
+default(echo,1)
+set echo=1        \\ 
+\o    2           \\ nice output
+\l log_temp.txt   \\ log file
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+\\ rank [-n,0]
+rank(n)=
+{
+my(ec,vr);
+ec= ellinit([-n,0],1); \\ 1: Numerical Field Q
+ellrankinit(ec);vr= ellrank(ec);rk=vr[1];
+return (rk);
+}
+
+\\ main
+{
+VXR= 12;      \\ real dim
+vv=vector(VXR,i,0);
+rx=0;         \\ level
+nx=-1;        \\ n
+for(ite=1,oo, \\ search
+  if(ite%10000==0,print(ite);); \\ trace
+
+\\ current search parameters
+\\ fine parameters tunning
+  VX= rx+2;   \\ increasing virtual dim
+  DZ= 10^(rx+6);            \\ 
+  ITZ=10^(2*rx+1);          \\
+  itg=gcd(ite,ite%ITZ+1);   \\
+\\ prepare back step
+  vold=vv;
+\\ smart random changes
+  for(i=1,VX,vv[i]+=random(2)*random(50+itg););
+  for(i=VX+1,#vv,vv[i]=0);
+  
+\\ limit parameter
+  while(1,
+    n=1;
+    for(i=1,VX,v=vv[i];if(v>0,n=n*prime(v);););
+    if(n>DZ,
+      imax=0;vmax=vecmax(vv[1..VX],&imax);
+      vv[imax]=0;
+      ,
+      break;
+      );
+    );
+
+\\ vv[] -> n
+  n=1;
+  for(j=1,VX,
+    k=vv[j];
+    if(k>0,n=n*prime(k);,vv[j]=0;);
+    );
+\\  
+  rn=rank(n);
+\\ evaluate the result
+  if(rn<rx,vv=vold;next;);  \\ back
+
+  printsep(" ",vv,n,rn,nx,rx);  \\ light trace
+
+\\   same rank but lowest n
+  if(rn==rx && n<nx,nx=n;print("Low");next;);
+
+\\   Best rank.  Update state.
+  if(rn>rx,
+    rx=rn;nx=n;
+    \\ happy trace
+    print;print(rx " HIGH_RANK " nx);print;
+    next;
+    );
+  );
+}
+
