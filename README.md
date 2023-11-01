@@ -18,6 +18,6 @@ C[-n^2,1] rank 7,8,9. And many others.
 
 Unpublished Conjecture 
 
-The number of digits of any rank n curve is: n*lg(n).
+The smallest number of digits of any rank r curve is: r*lg(r).
 
 
