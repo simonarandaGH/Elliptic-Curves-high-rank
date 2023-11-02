@@ -24,3 +24,15 @@ R    0-R   [0,-3*(12n)^2]
 
 ===================================
 
+Some unpublished Elliptic Curves
+Always Short form [A,B]. (Karl Weierstrass)
+
+Examples
+C[ n,0]  2020343 rank 6
+C[-n,0] -3129357 rank 6,  -188588857 rank 7
+C[-n^2,1] rank 7,8,9. 
+250 terms of [*,0] rank 5.
+Mordell curves, Congruent curves.
+And many-many others.
+=====================
+
