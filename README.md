@@ -1,4 +1,4 @@
-# My-best-Rank-Elliptic-Curves
+# My-best-rank-Elliptic-Curves
 
 (C)Oct.2023.Simon Aranda
 
@@ -16,9 +16,9 @@ C[-n^2,1] rank 7,8,9.
 
 And many others.
 
+Unpublished Conjectures
 
-Unpublished Conjectures: 
+1 - The smallest number of digits of any rank r curve is: r*lg(r).
 
-The smallest number of digits of any rank r curve is: r*lg(r).
-
+2 - The rank of an elliptic curve is almost always smaller than Omega(Discriminant). The probability of error is less than 5%.
 
