@@ -1,1 +1,4 @@
+Unpublished Conjecture
 
+The rank of an elliptic curve is almost always smaller than Omega(Discriminant).
+The probability of error is less than 5%.
