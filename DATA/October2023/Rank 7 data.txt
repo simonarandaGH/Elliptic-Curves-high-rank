@@ -1,0 +1,9 @@
+Some rank 7 curves 
+[2023.Oct.21 Simon Aranda (C)]
+
+C[n,0]
+First discovered rank 7 curves:
+-188588857 7
+-356301977 7 
+-13990867765 7
+
