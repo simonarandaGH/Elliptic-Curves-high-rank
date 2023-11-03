@@ -1,5 +1,5 @@
-8 urves families
-=================
+8 basic families
+================
 
 PARIGP>
 my(rx);
