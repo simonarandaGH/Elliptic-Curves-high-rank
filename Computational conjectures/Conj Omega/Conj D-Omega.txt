@@ -1,0 +1,27 @@
+Unpublished Conjecture
+
+The rank of an elliptic curve is almost always less than Omega(Discriminant).
+The probability of error is less than 5%.
+
+Disc [A,B] : -16(4A^3 + 27B^2)
+Omega(x)   : number of distinct prime divisors of x.
+
+If A and B are a function of a single parameter "n", 
+as is usually the case, it is easy to extend this conjecture to Omega(n).
+Among other consequences, this provides selective filtering in the search for high range curves.
+
+
+Example
+Test size: 4T^2.
+
+T   True Error
+10   438 0
+20  1674 2
+30  3707 9
+40  6535 21
+50 10160 36
+60 14577 57
+70 19785 89
+80 25795 119
+90 32603 151
+============
