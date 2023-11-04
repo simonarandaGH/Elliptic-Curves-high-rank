@@ -9,16 +9,16 @@ B   +n+n   [+n,+n]
 C   +n-n   [+n,-n]
 
 D   0+n    [0,+n] Mordell curves.
-E   0-n    [0,-n]
+E   0-n    [0,-n] "
 
 F   -n0    [-n,0]
 G   -n+n   [-n,+n]
 H   -n-n   [-n,-n]
 
-Squares:
+With n^2:
 
-L   0+nn   [0,  n^2 ]
-S   0-nn   [0,-(n^2)]
+L   0+nn   [0,  n^2 ] Mordell
+S   0-nn   [0,-(n^2)] "
 
 T   +nn0   [+n^2,0]
 M   -nn0   [-n^2,0]  Congruent curves.
