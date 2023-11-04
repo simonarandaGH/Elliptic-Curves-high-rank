@@ -16,7 +16,7 @@ C[-n^2,1] rank 7,8,9.
 
 And many others.
 
-Unpublished Conjectures
+Some unpublished Conjectures
 
 1 - The smallest number of digits of any rank r curve is: r*lg(r).
 
