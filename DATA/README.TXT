@@ -15,8 +15,14 @@ F   -n0    [-n,0]
 G   -n+n   [-n,+n]
 H   -n-n   [-n,-n]
 
-L    0nn   [0,+n^2]
+Squares:
+
+L   0+nn   [0,  n^2 ]
+S   0-nn   [0,-(n^2)]
+
+T   +nn0   [+n^2,0]
 M   -nn0   [-n^2,0]  Congruent curves.
+
 P   -nn1   [-n^2,+1]
 
 Q    -Q0   [-3*(12n)^2,0]
