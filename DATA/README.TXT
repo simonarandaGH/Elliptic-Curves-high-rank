@@ -1,38 +1,41 @@
 INDEX
 
-my         Short 
-keys       form
---------   ----------------------------
-A   +n0    [+n,0]
-B   +n+n   [+n,+n]
-C   +n-n   [+n,-n]
+my         Short                         Ref.
+keys       form       Name               OEIS
+--------   ---------- ----------------   -------
+A   +n0    [+n, 0]                       A------
+B   +n+n   [+n,+n]                       none
+C   +n-n   [+n,-n]                       none
 
-D   0+n    [0,+n] Mordell curves.
-E   0-n    [0,-n] "
+D   0+n    [0,+n]     Mordell curves.    A------
+E   0-n    [0,-n]     "                  A------
 
-F   -n0    [-n,0]
-G   -n+n   [-n,+n]
-H   -n-n   [-n,-n]
+F   -n0    [-n, 0]                       A------
+G   -n+n   [-n,+n]                       none
+H   -n-n   [-n,-n]                       none
 
-With n^2:
+TLMS with n^2
 
-L   0+nn   [0,  n^2 ] Mordell
-S   0-nn   [0,-(n^2)] "
+L   0+nn   [0,  n^2 ] Mordell curves.    A------
+S   0-nn   [0,-(n^2)] "                  A------
+T   +nn0   [+n^2,0]                      A------
+M   -nn0   [-n^2,0]   Congruent curves.  A------
 
-T   +nn0   [+n^2,0]
-M   -nn0   [-n^2,0]  Congruent curves.
+P   -nn1   [-n^2,+1]                     none
 
-P   -nn1   [-n^2,+1]
+Q    -Q0   [-3*(12n)^2,0]                A------
+R    0-R   [0,-3*(12n)^2]                A------
+================================================
 
-Q    -Q0   [-3*(12n)^2,0]
-R    0-R   [0,-3*(12n)^2]
 
-================================
-
-Some unpublished Elliptic Curves
+Some of unpublished Elliptic Curves
 
 C[ n,0]  2020343 rank 6
 C[-n,0] -3129357 rank 6,  -188588857 rank 7
 250 terms of [*,0] rank 5.
 C[+n^2,0] "3305859933" rank 6.
 C[-n^2,1] rank 7,8,9. 
+-------------------------------------------
+
+
+
