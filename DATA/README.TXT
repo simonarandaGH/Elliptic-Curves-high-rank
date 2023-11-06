@@ -1,32 +1,28 @@
 INDEX
 
-my         Short                         Ref.
-keys       form       Name               OEIS
---------   ---------- ----------------   -------
-A   +n0    [+n, 0]                       A------
+my         Short                         
+keys       form       Name               oeis
+--------   ---------- ----------------   ----
+A   +n0    [+n, 0]                       x
 B   +n+n   [+n,+n]                       none
 C   +n-n   [+n,-n]                       none
 
-D   0+n    [0,+n]     Mordell curves.    A------
-E   0-n    [0,-n]     "                  A------
+D   0+n    [0,+n]     Mordell curves.    x
+E   0-n    [0,-n]     "                  x
 
-F   -n0    [-n, 0]                       A------
+F   -n0    [-n, 0]                       x
 G   -n+n   [-n,+n]                       none
 H   -n-n   [-n,-n]                       none
 
 TLMS with n^2
 
-L   0+nn   [0,  n^2 ] Mordell curves.    A------
-S   0-nn   [0,-(n^2)] "                  A------
-T   +nn0   [+n^2,0]                      A------
-M   -nn0   [-n^2,0]   Congruent curves.  A------
+L   0+nn   [0,  n^2 ] Mordell curves.    x
+S   0-nn   [0,-(n^2)] "                  x
+T   +nn0   [+n^2,0]                      x
+M   -nn0   [-n^2,0]   Congruent curves.  x
 
 P   -nn1   [-n^2,+1]                     none
-
-Q    -Q0   [-3*(12n)^2,0]                A------
-R    0-R   [0,-3*(12n)^2]                A------
 ================================================
-
 
 Some of unpublished Elliptic Curves
 
