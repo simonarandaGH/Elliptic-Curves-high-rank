@@ -1,7 +1,5 @@
-
-The Oct.2023 discovered high rank C[n,0]
-PARIGP Output
-(C)2023.Simon Aranda
+fam [n,0] [-n,0] rank 6, 7.
+(C)Oct2023.Simon Aranda
 
 
 2020343
