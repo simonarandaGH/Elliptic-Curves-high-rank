@@ -26,11 +26,12 @@ K -432n2   [0,-432*n^2]                  x
 P   -nn1   [-n^2,+1]                     none
 ================================================
 
-Some of unpublished Elliptic Curves
+Unpublished
+
+250 terms of [*,0] rank 5.
 
 [ n,0]  2020343 rank 6
 [-n,0] -3129357 rank 6,  -188588857 rank 7
-250 terms of [*,0] rank 5.
 
 [-n,+n] 347251 rank 7.
 
