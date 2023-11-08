@@ -1,16 +1,14 @@
 (C)Nov2023.Simon Aranda
 
 If the curve C[n] , being n even, belongs to the family M (congruent curves) then C[n/2] belongs to the family T with identical rank. The reciprocal is also true.
-In this directory, in the file relating to family M rank 4, the even numbers give a T term.
+In this directory, in the file relating to family M, the even numbers give a T term.
 This has the consequence that:
 for n="3305859933" the curve [+n^2, 0] has rank 6. 
-Fact verified and unpublished.
-
-In the T-family the smallest value with rank 5 is the half of the smallest even value of rank 5 in the M-family.
+In the T-family the smallest value with rank r is the half of the smallest even value of rank r in the M-family.
 
 
 PARIGP   3305859933, 6.  [3,17,31,449,4657]
-
 4Nov2023 Search: 3305859933
 - Sorry, but the terms do not match anything in the table.
 - There don't seem to be very good results for your search.
+
