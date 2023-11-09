@@ -1,0 +1,967 @@
+PARIGP Elliptic Curves
+======================
+
+*******************
+Function: ellanalyticrank
+C-Name: ellanalyticrank_bitprec P: GDGb
+Help
+ ellanalyticrank(E, {eps}): returns the order of vanishing at s=1
+ of the L-function of the elliptic curve E and the value of the first
+ nonzero derivative. To determine this order, it is assumed that any
+ value less than eps is zero. If no value of eps is given, 2^(-bitprecision/2)
+ is used.
+
+Description
+ returns the order of vanishing at s=1 of the L-function of the
+ elliptic curve E/Q and the value of the first nonzero derivative. To
+ determine this order, it is assumed that any value less than {eps} is
+ zero. If {eps} is omitted, 2^{-b/2} is used, where b
+ is the current bit precision.
+ 
+ >E = ellinit("11a1");\ rank 0
+ >ellanalyticrank(E)
+ %2 = [0, 0.2538418608559106843377589233]
+ >E = ellinit("37a1");\ rank 1
+ >ellanalyticrank(E)
+ %4 = [1, 0.3059997738340523018204836835]
+ >E = ellinit("389a1");\ rank 2
+ >ellanalyticrank(E)
+ %6 = [2, 1.518633000576853540460385214]
+ >E = ellinit("5077a1");\ rank 3
+ >ellanalyticrank(E)
+ %8 = [3, 10.39109940071580413875185035]
+  Analogous and more general functionalities for E
+ defined over general number fields are available through {lfun}
+ and {lfunorderzero}.
+
+
+*******************
+Function: ellfromeqn
+C-Name: ellfromeqn P: G
+Help
+ ellfromeqn(P): given a genus 1 plane curve, defined by the affine
+ equation f(x,y) = 0, return the coefficients [a1,a2,a3,a4,a6] of a
+ Weierstrass equation for its Jacobian.
+ This allows to recover a Weierstrass model for an elliptic curve given by a
+ general plane cubic or by a binary quartic or biquadratic model.
+
+Description
+
+ Given a genus 1 plane curve, defined by the affine equation f(x,y) = 0,
+ return the coefficients [a_1,a_2,a_3,a_4,a_6] of a Weierstrass equation
+ for its Jacobian. This allows to recover a Weierstrass model for an elliptic
+ curve given by a general plane cubic or by a binary quartic or biquadratic
+ model. The function implements the f to f^* formulae of Artin, Tate
+ and Villegas (Advances in Math. 198 (2005), pp. 366--382).
+ In the example below, the function is used to convert between twisted Edwards
+ coordinates and Weierstrass coordinates.
+ 
+ >e = ellfromeqn(a*x^2+y^2 - (1+d*x^2*y^2))
+ %1 = [0, -a - d, 0, -4*d*a, 4*d*a^2 + 4*d^2*a]
+ >E = ellinit(ellfromeqn(y^2-x^2 - 1 +(121665/121666*x^2*y^2)),2^255-19);
+ >isprime(ellcard(E) / 8)
+ %3 = 1
+ 
+ The elliptic curve attached to the sum of two cubes is given by
+ 
+ >ellfromeqn(x^3+y^3 - a)
+ %1 = [0, 0, -9*a, 0, -27*a^2]
+ 
+ {Congruent number problem}
+ Let n be an integer, if a^2+b^2=c^2 and a*b=2*n,
+ then by substituting b by 2*n/a in the first equation,
+ we get ((a^2+(2*n/a)^2)-c^2)*a^2 = 0.
+ We set x=a, y=a*c.
+ 
+ >En = ellfromeqn((x^2 + (2*n/x)^2 - (y/x)^2)*x^2)
+ %1 = [0, 0, 0, -16*n^2, 0]
+ 
+ For example 23 is congruent since the curve has a point of infinite order,
+ namely:
+ 
+ >ellheegner( ellinit(subst(En, n, 23)) )
+ %2 = [168100/289, 68053440/4913]
+ 
+
+
+*******************
+Function: ellfromj
+C-Name: ellfromj P: G
+Help
+ ellfromj(j): returns the coefficients [a1,a2,a3,a4,a6] of a fixed
+ elliptic curve with j-invariant j.
+
+Description
+ returns the coefficients [a_1,a_2,a_3,a_4,a_6] of a fixed elliptic curve
+ with j-invariant j. The given model is arbitrary; for instance, over the
+ rationals, it is in general not minimal nor even integral.
+ 
+ >v = ellfromj(1/2)
+ %1 = [0, 0, 0, 10365/4, 11937025/4]
+ >E = ellminimalmodel(ellinit(v)); E[1..5]
+ %2 = [0, 0, 0, 41460, 190992400]
+ >F = ellminimalmodel(elltwist(E, 24)); F[1..5]
+ %3 = [1, 0, 0, 72, 13822]
+ >[E.disc, F.disc]
+ %4 = [-15763098924417024000, -82484842750]
+  For rational j, the following program returns the integral
+ curve of minimal discriminant and given j invariant:
+ 
+ ellfromjminimal(j)=
+ { my(E = ellinit(ellfromj(j)));
+   my(D = ellminimaltwist(E));
+   ellminimalmodel(elltwist(E,D));
+ }
+ >e = ellfromjminimal(1/2); e.disc
+ %1 = -82484842750
+  Using fl  = 1 in {ellminimaltwist} would instead return the
+ curve of minimal conductor. For instance, if j = 1728, this would return a
+ different curve (of conductor 32 instead of 64).
+
+
+*******************
+Function: ellgenerators
+C-Name: ellgenerators P: G
+Help
+ ellgenerators(E): if E is an elliptic curve over the rationals,
+ return the generators of the Mordell-Weil group attached to the curve.
+ This relies on the curve being referenced in the elldata database.
+ If E is an elliptic curve over a finite field Fq as output by ellinit(),
+ return a minimal set of generators for the group E(Fq).
+
+Description
+
+ If E is an elliptic curve over the rationals, return a Z basis of the
+ free part of the {Mordell-Weil group} attached to E.  This relies on
+ the {elldata} database being installed and referencing the curve, and so
+ is only available for curves over Z of small conductors.
+ If E is an elliptic curve over a finite field Fq as output by
+ {ellinit}, return a minimal set of generators for the group E(Fq).
+  When the group is not cyclic, of shape Z/d_1Ztimes
+ Z/d_2Z with d_2\mid d_1, the points [P,Q] returned by ellgenerators
+ need not have order d_1 and d_2: it is true that
+ P has order d_1, but we only know that Q is a generator of
+ E(Fq)/<P> and that the Weil pairing w(P,Q) has order d_2,
+ see {ellgroup}.
+ If you need generators [P,R] with R of order d_2, find
+ x such that R = Q-[x]P has order d_2 by solving
+ the discrete logarithm problem [d_2]Q = [x]([d_2]P) in a cyclic group of
+ order d_1/d_2. This will be very expensive if d_1/d_2 has a large
+ prime factor.
+
+
+*******************
+Function: ellglobalred
+C-Name: ellglobalred P: G
+Help
+ ellglobalred(E): E being an elliptic curve over a number field,
+ returns [N, v, c, faN, L], where N is the conductor of E,
+ c is the product of the local Tamagawa numbers c_p, faN is the
+ factorization of N and L[i] is elllocalred(E, faN[i,1]); v is an obsolete
+ field.
+Description:
+ (gen):gen        ellglobalred(1)
+
+Description
+ let E be an {ell} structure as output by {ellinit} attached
+ to an elliptic curve defined over a number field. This function calculates
+ the arithmetic conductor and the global {Tamagawa number} c.
+ The result [N,v,c,F,L] is slightly different if E is defined
+ over Q (domain D = 1 in {ellinit}) or over a number field
+ (domain D is a number field structure, including {nfinit(x)}
+ representing Q !):
+  N is the arithmetic conductor of the curve,
+  v is an obsolete field, left in place for backward compatibility.
+ If E is defined over Q, v gives the coordinate change for E to the
+ standard minimal integral model ({ellminimalmodel} provides it in a
+ cheaper way); if E is defined over another number field, v gives a
+ coordinate change to an integral model ({ellintegralmodel} provides it
+ in a cheaper way).
+  c is the product of the local Tamagawa numbers c_p, a quantity
+ which enters in the {Birch and Swinnerton-Dyer conjecture},
+  F is the factorization of N,
+  L is a vector, whose i-th entry contains the local data
+ at the i-th prime ideal divisor of N, i.e.
+ {L[i] = elllocalred(E,F[i,1])}. If E is defined over Q, the local
+ coordinate change has been deleted and replaced by a 0; if E is defined
+ over another number field the local coordinate change to a local minimal
+ model is given relative to the integral model afforded by v (so either
+ start from an integral model so that v be trivial, or apply v first).
+
+
+*******************
+Function: ellheegner
+C-Name: ellheegner P: G
+Help
+ ellheegner(E): return a rational nontorsion point on the elliptic curve E
+ assumed to be of rank 1.
+
+Description
+ Let E be an elliptic curve over the rationals, assumed to be of
+ (analytic) rank 1. This returns a nontorsion rational point on the curve,
+ whose canonical height is equal to the product of the elliptic regulator by the
+ analytic Sha.
+ This uses the Heegner point method, described in Cohen GTM 239; the complexity
+ is proportional to the product of the square root of the conductor and the
+ height of the point (thus, it is preferable to apply it to strong Weil curves).
+ 
+ >E = ellinit([-157^2,0]);
+ >u = ellheegner(E); print(u[1], "\n", u[2])
+ 69648970982596494254458225/166136231668185267540804
+ 538962435089604615078004307258785218335/67716816556077455999228495435742408
+ >ellheegner(ellinit([0,1]))        \ E has rank 0 !
+  ***   at top-level: ellheegner(E=ellinit
+  ***                 ^--------------------
+  *** ellheegner: The curve has even analytic rank.
+ 
+
+
+*******************
+Function: ellheight
+C-Name: ellheight0 P: GDGDGp
+Help
+ ellheight(E,{P},{Q}): Faltings height of the curve E, resp. canonical
+ height of the point P on elliptic curve E, resp. the value of the attached
+ bilinear form at (P,Q).
+
+Description
+ Let E be an elliptic curve defined over K = Q or a number field,
+ as output by {ellinit}; it needs not be given by a minimal model
+ although the computation will be faster if it is.
+  Without arguments P,Q, returns the Faltings height of the curve E
+ using Deligne normalization. For a rational curve, the normalization is such
+ that the function returns {-(1/2)*log(ellminimalmodel(E).area)}.
+  If the argument Pin E(K) is present, returns the global
+ Neron-Tate height h(P) of the point, using the normalization in
+ Cremona's {Algorithms for modular elliptic curves}.
+  If the argument Qin E(K) is also present, computes the value of
+ the bilinear form (h(P+Q)-h(P-Q)) / 4.
+Variant: Also available is {ellheight}{GEN E, GEN P, long prec}
+ (Q omitted).
+
+
+*******************
+Function: ellheightmatrix
+C-Name: ellheightmatrix P: GGp
+Help
+ ellheightmatrix(E,x): gives the height matrix for vector of points x
+ on elliptic curve E.
+
+Description
+ x being a vector of points, this
+ function outputs the Gram matrix of x with respect to the Neron-Tate
+ height, in other words, the (i,j) component of the matrix is equal to
+ {ellheight(E,x[i],x[j])}. The rank of this matrix, at least in some
+ approximate sense, gives the rank of the set of points, and if x is a
+ basis of the {Mordell-Weil group} of E, its determinant is equal to
+ the regulator of E. Note our height normalization follows Cremona's
+ {Algorithms for modular elliptic curves}: this matrix should be divided
+ by 2 to be in accordance with, e.g., Silverman's normalizations.
+
+
+*******************
+Function: ellinit
+C-Name: ellinit P: GDGp
+Help
+ ellinit(x,{D=1}): let x be a vector [a1,a2,a3,a4,a6], or [a4,a6] if
+ a1=a2=a3=0, defining the curve Y^2 + a1.XY + a3.Y = X^3 + a2.X^2 + a4.X +
+ a6; x can also be a string, in which case the curve with matching name is
+ retrieved from the elldata database, if available. This function initializes
+ an elliptic curve over the domain D (inferred from coefficients if omitted).
+Description:
+ (gen, gen, small):ell:prec  ellinit(1, 2, prec)
+
+Description
+
+ initialize an {ell} structure, attached to the elliptic curve E.
+ E is either
+  a 5-component vector [a_1,a_2,a_3,a_4,a_6] defining the elliptic
+ curve with Weierstrass equation
+  Y^2 + a_1 XY + a_3 Y = X^3 + a_2 X^2 + a_4 X + a_6, 
+  a 2-component vector [a_4,a_6] defining the elliptic
+ curve with short Weierstrass equation
+  Y^2 = X^3 + a_4 X + a_6, 
+  a single-component vector [j] giving the j-invariant for the curve,
+ with the same coefficients as given by {ellfromj}.
+  a character string in Cremona's notation, e.g. {"11a1"}, in which
+ case the curve is retrieved from the {elldata} database if available.
+ The optional argument D describes the domain over which the curve is
+ defined:
+  the {INT} 1 (default): the field of rational numbers Q.
+  a {INT} p, where p is a prime number: the prime finite field
+ Fp.
+  an {INTMOD} {Mod(a, p)}, where p is a prime number: the
+ prime finite field Fp.
+  a {FFELT}, as returned by {ffgen}: the corresponding finite
+ field Fq.
+  a {PADIC}, O(p^n): the field Q_p, where p-adic quantities
+ will be computed to a relative accuracy of n digits. We advise to input a
+ model defined over Q for such curves. In any case, if you input an
+ approximate model with {PADIC} coefficients, it will be replaced by a lift
+ to Q (an exact model ``close'' to the one that was input) and all quantities
+ will then be computed in terms of this lifted model, at the given accuracy.
+  a {REAL} x: the field C of complex numbers, where floating
+ point quantities are by default computed to a relative accuracy of
+ {precision}(x). If no such argument is given, the value of
+ {realprecision} at the time {ellinit} is called will be used.
+  a number field K, given by a {nf} or {bnf} structure; a
+ {bnf} is required for {ellminimalmodel}.
+  a prime ideal {p}, given by a {prid} structure; valid if
+ x is a curve defined over a number field K and the equation is integral
+ and minimal at {p}.
+ This argument D is indicative: the curve coefficients are checked for
+ compatibility, possibly changing D; for instance if D = 1 and
+ an {INTMOD} is found. If inconsistencies are detected, an error is
+ raised:
+ 
+ >ellinit([1 + O(5), 1], O(7));
+  ***   at top-level: ellinit([1+O(5),1],O
+  ***                 ^--------------------
+  *** ellinit: inconsistent moduli in ellinit: 7 != 5
+  If the curve coefficients are too general to fit any of the
+ above domain categories, only basic operations, such as point addition, will
+ be supported later.
+ If the curve (seen over the domain D) is singular, fail and return an
+ empty vector [].
+ 
+ >E = ellinit([0,0,0,0,1]);\ y^2 = x^3 + 1, over Q
+ >E = ellinit([0,1]);      \ the same curve, short form
+ >E = ellinit("36a1");     \ sill the same curve, Cremona's notations
+ >E = ellinit([0]);        \ a curve of j-invariant 0
+ >E = ellinit([0,1], 2)    \ over F2: singular curve
+ %4 = []
+ >E = ellinit(['a4,'a6] * Mod(1,5)); \ over F_5[a4,a6], basic support !
+  Note that the given curve of j-invariant 0 happens
+ to be {36a1} but a priori any model for an arbitrary twist could have
+ been returned. See {ellfromj}.
+ The result of {ellinit} is antev{ell} structure. It contains at least
+ the following information in its components:
+ %
+  a_1,a_2,a_3,a_4,a_6,b_2,b_4,b_6,b_8,c_4,c_6,\Delta,j.
+ %
+ All are accessible via Member Names. In particular, the discriminant is
+ {E.disc}, and the j-invariant is {E.j}.
+ 
+ >E = ellinit([a4, a6]);
+ >E.disc
+ %2 = -64*a4^3 - 432*a6^2
+ >E.j
+ %3 = -6912*a4^3/(-4*a4^3 - 27*a6^2)
+ 
+ Further components contain domain-specific data, which are in general dynamic:
+ only computed when needed, and then cached in the structure.
+ 
+ >E = ellinit([2,3], 10^60+7); \ E over F_p, p large
+ >ellap(E)
+ time = 4,440 ms.
+ %2 = -1376268269510579884904540406082
+ >ellcard(E); \ now instantaneous !
+ time = 0 ms.
+ >ellgenerators(E);
+ time = 5,965 ms.
+ >ellgenerators(E);\ second time instantaneous
+ time = 0 ms.
+ 
+ See the description of Member Names related to elliptic curves at the
+ beginning of this section.
+
+
+*******************
+Function: ellisogeny
+C-Name: ellisogeny P: GGD0,L,DnDn
+Help
+ ellisogeny(E, G, {only_image = 0}, {x = 'x}, {y = 'y}): compute the image
+ and isogeny corresponding to the quotient of E by the subgroup G.
+
+Description
+
+ Given an elliptic curve E, a finite subgroup G of E is given either
+ as a generating point P (for a cyclic G) or as a polynomial whose roots
+ vanish on the x-coordinates of the nonzero elements of G (general case
+ and more efficient if available). This function returns the
+ [a_1,a_2,a_3,a_4,a_6] invariants of the quotient elliptic curve E/G and
+ (ifvar{only\_image} is zero (the default)) a vector of rational
+ functions [f, g, h] such that the isogeny E to E/G is given by (x,y)
+ to (f(x)/h(x)^2, g(x,y)/h(x)^3).
+ 
+ >E = ellinit([0,1]);
+ >elltors(E)
+ %2 = [6, [6], [[2, 3]]]
+ >ellisogeny(E, [2,3], 1) \ Weierstrass model for E/<P>
+ %3 = [0, 0, 0, -135, -594]
+ >ellisogeny(E,[-1,0])
+ %4 = [[0,0,0,-15,22], [x^3+2*x^2+4*x+3, y*x^3+3*y*x^2-2*y, x+1]]
+ 
+
+
+*******************
+Function: ellisomat
+C-Name: ellisomat P: GD0,L,D0,L,
+Help
+ ellisomat(E, {p=0}, {fl=0}): E being an elliptic curve over a number
+ field K, return a list of representatives of the isomorphism classes of
+ elliptic curves defined over K and K-isogenous to E, with the corresponding
+ isogenies from E and their dual, and the matrix of the isogeny degrees between
+ the curves. If the flag fl is 1, the isogenies are not computed, which saves
+ time. If p is set, it must be a prime number: in this case only isogenies of
+ degree a power of p are considered.
+
+Description
+
+ Given an elliptic curve E defined over a number field K, compute
+ representatives of the isomorphism classes of elliptic curves defined over
+ K and K-isogenous to E. We assume that E does not have CM over K
+ (otherwise that set would be infinite).
+ For any such curve E_i, let f_i: E to E_i be a rational isogeny
+ of minimal degree and let g_i: E_i to E be the dual isogeny; and let M
+ be the matrix such that M_{i,j} is the minimal degree for an isogeny E_i
+ to E_j.
+ The function returns a vector [L,M] where L is a list of triples
+ [E_i, f_i, g_i] (fl   = 0), or simply the list of E_i (fl  = 1,
+ which saves time). The curves E_i are given in [a_4,a_6] form and the
+ first curve E_1 is isomorphic to E by f_1.
+ If p is set, it must be a prime number; in this which case only isogenies of
+ degree a power of p are considered.
+ Over a number field, the possible isogeny degrees are determined by
+ Billerey algorithm.
+ 
+ >E = ellinit("14a1");
+ >[L,M] = ellisomat(E);
+ >LE = apply(x->x[1], L) \ list of curves
+ %3 = [[215/48,-5291/864],[-675/16,6831/32],[-8185/48,-742643/864],
+      [-1705/48,-57707/864],[-13635/16,306207/32],[-131065/48,-47449331/864]]
+ >L[2][2] \ isogeny f_2
+ %4 = [x^3+3/4*x^2+19/2*x-311/12,
+       1/2*x^4+(y+1)*x^3+(y-4)*x^2+(-9*y+23)*x+(55*y+55/2),x+1/3]
+ >L[2][3] \ dual isogeny g_2
+ %5 = [1/9*x^3-1/4*x^2-141/16*x+5613/64,
+       -1/18*x^4+(1/27*y-1/3)*x^3+(-1/12*y+87/16)*x^2+(49/16*y-48)*x
+       +(-3601/64*y+16947/512),x-3/4]
+ >apply(E->ellidentify(ellinit(E))[1][1], LE)
+ %6 = ["14a1","14a4","14a3","14a2","14a6","14a5"]
+ >M
+ %7 =
+ [1  3  3 2  6  6]
+ [3  1  9 6  2 18]
+ [3  9  1 6 18  2]
+ [2  6  6 1  3  3]
+ [6  2 18 3  1  9]
+ [6 18  2 3  9  1]
+ 
+
+
+*******************
+Function: ellisotree
+C-Name: ellisotree P: G
+Help
+ ellisotree(E): E being an elliptic curve over Q or a set of isogenous
+ rational curves as given by ellisomat, return minimal models of the isomorphism
+ classes of elliptic curves isogenous to E (or in the set) and the oriented
+ graph of isogenies of prime degree (adjacency matrix).
+
+Description
+ Given an elliptic curve E defined over Q or a set of
+ Q-isogenous curves as given by {ellisomat}, return a pair [L,M] where
+  L lists the minimal models of the isomorphism classes of elliptic
+ curves Q-isogenous to E (or in the set of isogenous curves),
+  M is the adjacency matrix of the prime degree isogenies tree:
+ there is an edge from E_i to E_j if there is an isogeny E_i to E_j of
+ prime degree such that the Neron differential forms are preserved.
+ 
+ >E = ellinit("14a1");
+ >[L,M] = ellisotree(E);
+ >M
+ %3 =
+ [0 0 3 2 0 0]
+ [3 0 0 0 2 0]
+ [0 0 0 0 0 2]
+ [0 0 0 0 0 3]
+ [0 0 0 3 0 0]
+ [0 0 0 0 0 0]
+ >[L2,M2] = ellisotree(ellisomat(E,2,1));
+ %4 =
+ [0 2]
+ [0 0]
+ >[L3,M3] = ellisotree(ellisomat(E,3,1));
+ >M3
+ %6 =
+ [0 0 3]
+ [3 0 0]
+ [0 0 0]
+  Compare with the result of {ellisomat}.
+ 
+ >[L,M]=ellisomat(E,,1);
+ >M
+ %7 =
+ [1  3  3 2  6  6]
+ [3  1  9 6  2 18]
+ [3  9  1 6 18  2]
+ [2  6  6 1  3  3]
+ [6  2 18 3  1  9]
+ [6 18  2 3  9  1]
+ 
+
+
+*******************
+Function: ellminimalmodel
+C-Name: ellminimalmodel P: GD&
+Help
+ ellminimalmodel(E,{&v}): determines whether the elliptic curve E defined
+ over a number field admits a global minimal model. If so return it
+ and sets v to the corresponding change of variable. Else return the
+ (nonprincipal) Weierstrass class of E.
+
+Description
+ Let E be an {ell} structure over a number field K. This function
+ determines whether E admits a global minimal integral model. If so, it
+ returns it and sets v = [u,r,s,t] to the corresponding change of variable:
+ the return value is identical to that of {ellchangecurve(E, v)}.
+ Else return the (nonprincipal) Weierstrass class of E, i.e. the class of
+prod {p}^{(v_{{p}}{\Delta} -delta_{{p}}) / 12} where
+Delta = {E.disc} is the model's discriminant and
+ {p} ^delta_{{p}} is the local minimal discriminant.
+ This function requires either that E be defined
+ over the rational field Q (with domain D = 1 in {ellinit}),
+ in which case a global minimal model always exists, or over a number
+ field given by avar{bnf} structure. The Weierstrass class is given in
+ {bnfisprincipal} format, i.e. in terms of the {K.gen} generators.
+ The resulting model has integral coefficients and is everywhere minimal, the
+ coefficients a_1 and a_3 are reduced modulo 2 (in terms of the fixed
+ integral basis {K.zk}) and a_2 is reduced modulo 3. over Q, we
+ further require that a_1 and a_3 be 0 or 1, that a_2 be 0 orpm
+ 1 and that u > 0 in the change of variable: both the model and the change
+ of variable v are then unique.\sidx{minimal model}
+ 
+ >e = ellinit([6,6,12,55,233]); \ over Q
+ >E = ellminimalmodel(e, &v);
+ >E[1..5]
+ %3 = [0, 0, 0, 1, 1]
+ >v
+ %4 = [2, -5, -3, 9]
+ 
+ 
+ >K = bnfinit(a^2-65); \ over a nonprincipal number field
+ >K.cyc
+ %2 = [2]
+ >u = Mod(8+a, K.pol);
+ >E = ellinit([1,40*u+1,0,25*u^2,0], K);
+ >ellminimalmodel(E)\ no global minimal model exists over Z_K
+ %6 = [1]~
+ 
+
+
+*******************
+Function: ellminimaltwist
+C-Name: ellminimaltwist0 P: GD0,L,
+Help
+ ellminimaltwist(E, {flag=0}): E being an elliptic curve defined over Q,
+ return a discriminant D such that the twist of E by D is minimal among all
+ possible quadratic twists, i.e., if flag=0, its minimal model has minimal
+ discriminant, or if flag=1, it has minimal conductor.
+
+Description
+ Let E be an elliptic curve defined over Q, return
+ a discriminant D such that the twist of E by D is minimal among all
+ possible quadratic twists, i.e. if fl =0, its minimal model has minimal
+ discriminant, or if fl =1, it has minimal conductor.
+ In the example below, we find a curve with j-invariant 3 and minimal
+ conductor.
+ 
+ >E = ellminimalmodel(ellinit(ellfromj(3)));
+ >ellglobalred(E)[1]
+ %2 = 357075
+ >D = ellminimaltwist(E,1)
+ %3 = -15
+ >E2 = ellminimalmodel(elltwist(E,D));
+ >ellglobalred(E2)[1]
+ %5 = 14283
+ 
+ In the example below, fl =0 and fl =1 give different results.
+ 
+ >E = ellinit([1,0]);
+ >D0 = ellminimaltwist(E,0)
+ %7 = 1
+ >D1 = ellminimaltwist(E,1)
+ %8 = 8
+ >E0 = ellminimalmodel(elltwist(E,D0));
+ >[E0.disc, ellglobalred(E0)[1]]
+ %10 = [-64, 64]
+ >E1 = ellminimalmodel(elltwist(E,D1));
+ >[E1.disc, ellglobalred(E1)[1]]
+ %12 = [-4096, 32]
+ 
+Variant: Also available are
+ {ellminimaltwist}{E} for fl =0, and
+ {ellminimaltwistcond}{E} for fl =1.
+
+
+*******************
+Function: ellrank
+C-Name: ellrank P: GD0,L,DGp
+Help
+ ellrank(E,{effort=0},{points}): if E is an elliptic curve over Q,
+ attempt to compute the Mordell-Weil group attached to the curve.
+ The output is [r,R,s,L] such that the rank is between r and R (both included),
+ s gives informations on the Tate-Shafarevich group,
+ and L is a list of independent, non-torsion rational points on the curve.
+ E can also be given as the output of ellrankinit(E).
+
+Description
+ if E is an elliptic curve over Q,
+ attempt to compute the Mordell-Weil group attached to the curve.
+ The output is [r,R,s,L] such that the rank is between r and R
+ (both included),
+ s gives informations on the Tate-Shafarevic group (see below)
+ and L is a list of independent, non-torsion rational points
+ on the curve.
+ E can also be given as the output of {ellrankinit(E)}.
+ If {points} is present, it must be a vector of rational points on the
+ curve. The parameter {effort} is a measure of the effort done to find
+ rational points before giving up. If {effort} is not 0, the search is
+ randomized, so rerunning the function might find different or even
+ extra points. Values up to 10 or so are sensible but the parameter can be
+ increased futher: running times increase roughly like the {cube} of the
+ {effort} value.
+ 
+ >E = ellinit([-127^2,0]);
+ >ellrank(E)
+ %2 = [1, 1, 0, []]\ rank is 1 but no point has been found.
+ >ellrank(E,4)\ with more effort we find a point.
+ %3 = [1, 1, 0, [[38902300445163190028032/305111826865145547009,
+      680061120400889506109527474197680/5329525731816164537079693913473]]]
+ 
+ Finally, E can be a pair [e, f], where e is an elliptic curve given by
+ {ellrankinit} and f is a quadratic twist of e. We then look for
+ points on f.
+ Note that the {ellrankinit} initialization is independent of f!
+ {Technical explanation}
+ The algorithm, which computes the 2-descent and the 2-part of the Cassels
+ pairings has an intrinsic limitation: We can never have r = R when
+ the Tate-Shafarevic group G has 4-torsion.
+ More precisely, the algorithm computes (exactly) three quantities:
+  the rank of the 2-Selmer (C)
+  the rank of the 2-torsion subgroup (T)
+  the rank of G[2]/2G[4] (s) (even).
+ Of interest are also
+  the rank of E(Q) (R)
+  the 2-rank of G (S) (conjecturally even).
+ The following formula holds C = T + R + S.
+ The value s gives a minoration of S while r gives a minoration of R.
+ When the conductor of E is small, the BSD conjecture can be used
+ to find the true rank:
+ 
+ >E=ellinit([-113^2,0]);
+ >ellrootno(E)\ rank is even (parity conjecture)
+ %2 = 1
+ >ellrank(E)
+ %3 = [0, 2, 0, []]\ rank is either 0 or 2, 2-rank of G is
+ >ellrank(E, 3)\ try harder
+ %4 = [0, 2, 0, []]\ no luck
+ >[r,L] = ellanalyticrank(E)\ assume BSD
+ %5 = [0, 3.9465...]
+ >L / ellbsd(E)\ analytic rank is 0, compute Sha
+ %6 = 16.0000000000000000000000000000000000000
+ 
+ We find that the rank is 0 and the cardinal of the Tate-Shafarevich group
+ is 16 (assuming BSD!). Moreover, since s=0, it is isomorphic to (Z/4Z)^2.
+ When the rank is 1 and the conductor is small, {ellheegner} can be used
+ to find the point.
+ 
+  ? E = ellinit([-157^2,0]);
+  ? ellrank(E)
+  %2 = [1, 1, []]\ rank is 1, no point found
+  ? ellrank(E, 5)\ Try harder
+  time = 4,321 ms.
+  %3 = [1, 1, []]\ No luck
+  ? ellheegner(E)\ use analytic method
+  time = 608 ms.
+  %4 = [69648970982596494254458225/166136231668185267540804, ...]
+  In this last example, an {effort} about 10 would also
+ find a random point (not necessarily the Heegner point) in 5 to 20 seconds.
+
+
+*******************
+Function: ellrankinit
+C-Name: ellrankinit P: Gp
+Help
+ ellrankinit(E): if E is an elliptic curve over Q,
+ initialize data for further calls to ellrank.
+
+Description
+ if E is an elliptic curve over Q, initialize data to speed up further
+ calls to {ellrank}.
+ 
+ >E = ellinit([0,2429469980725060,0,275130703388172136833647756388,0]);
+ >rk = ellrankinit(E);
+ >[r, R, s, P] = ellrank(rk)
+ %3 = [12, 14, 0, [...]]
+ >[r, R, s, P] = ellrank(rk, 1, P)\ more effort, using known points
+ %4 = [14, 14, 0, [...]]\ this time all points are found
+ 
+
+
+*******************
+Function: ellrootno
+C-Name: ellrootno P: lGDG
+Help
+ ellrootno(E,{p}): root number for the L-function of the elliptic
+ curve E/Q at a prime p (including 0, for the infinite place); global root
+ number if p is omitted. If p is omitted, the curve can also be defined over
+ a number field.
+
+Description
+ E being an {ell} structure over Q as output by {ellinit},
+ this function computes the local root number of its L-series at the place
+ p (at the infinite place if p = 0). If p is omitted, return the global
+ root number and in this case the curve can also be defined over a number field.
+ Note that the global root number is the sign of the functional
+ equation and conjecturally is the parity of the rank of the
+ {Mordell-Weil group}. The equation for E needs not be minimal at p,
+ but if the model is already minimal the function will run faster.
+
+
+*******************
+Function: elltwist
+C-Name: elltwist P: GDG
+Help
+ elltwist(E,{P}): returns an ell structure for the twist of the elliptic
+ curve E by the quadratic extension defined by P (when P is a polynomial of
+ degree 2) or quadpoly(P) (when P is an integer). If E is defined over a
+ finite field, then P can be omitted.
+
+Description
+ returns an {ell} structure (as given by {ellinit}) for the twist
+ of the elliptic curve E by the quadratic extension of the coefficient
+ ring defined by P (when P is a polynomial) or {quadpoly(P)} when P
+ is an integer.  If E is defined over a finite field, then P can be
+ omitted, in which case a random model of the unique nontrivial twist is
+ returned. If E is defined over a number field, the model should be
+ replaced by a minimal model (if one exists).
+ The elliptic curve E can be given in some of the formats allowed by
+ {ellinit}: an {ell} structure, a 5-component vector
+ [a_1,a_2,a_3,a_4,a_6] or a 2-component vector [a_4,a_6].
+ Twist by discriminant -3:
+ 
+ >elltwist([0,a2,0,a4,a6], -3)[1..5]
+ %1 = [0, -3*a2, 0, 9*a4, -27*a6]
+ >elltwist([a4,a6], -3)[1..5]
+ %2 = [0, 0, 0, 9*a4, -27*a6]
+ 
+ Twist by the Artin-Schreier extension given by x^2+x+T in
+ characteristic 2:
+ 
+ >lift(elltwist([a1,a2,a3,a4,a6]*Mod(1,2), x^2+x+T)[1..5])
+ %1 = [a1, a2+a1^2*T, a3, a4, a6+a3^2*T]
+ 
+ Twist of an elliptic curve defined over a finite field:
+ 
+ >E = elltwist([1,7]*Mod(1,19)); lift([E.a4, E.a6])
+ %1 = [11, 12]
+ 
+
+
+*******************
+Function: _header_elliptic_curves
+Class: header
+
+Description
+
+section{Elliptic curves}
+subsec{Elliptic curve structures} 
+ An elliptic curve is given by a Weierstrass model\sidx{Weierstrass equation}
+ 
+   y^2 + a_1 xy + a_3 y = x^3 + a_2 x^2 + a_4 x + a_6,
+ 
+ whose discriminant is nonzero. Affine points on {E} are represented as
+ two-component vectors {[x,y]}; the point at infinity, i.e.~the identity
+ element of the group law, is represented by the one-component vector
+ {[0]}.
+ Given a vector of coefficients [a_1,a_2,a_3,a_4,a_6], the function
+ {ellinit} initializes and returns antev{ell} structure. An additional
+ optional argument allows to specify the base field in case it cannot be
+ inferred from the curve coefficients. This structure contains data needed by
+ elliptic curve related functions, and is generally passed as a first argument.
+ Expensive data are skipped on initialization: they will be dynamically
+ computed when (and if) needed, and then inserted in the structure. The
+ precise layout of thetev{ell} structure is left undefined and should never
+ be used directly. The following {Member Names} are available,
+ depending on the underlying domain.
+ {All domains} 
+  {a1}, {a2}, {a3}, {a4}, {a6}: coefficients of the
+ elliptic curve.
+  {b2}, {b4}, {b6}, {b8}: b-invariants of the curve; in
+ characteristicneq 2, for Y = 2y + a_1x+a3, the curve equation becomes
+  Y^2 = 4 x^3 + b_2 x^2 + 2b_4 x + b_6 =: g(x). 
+  {c4}, {c6}: c-invariants of the curve; in characteristicneq
+ 2,3, for X = x + b_2/12 and Y = 2y + a_1x+a3, the curve equation becomes
+  Y^2 = 4 X^3 - (c_4/12) X - (c_6/216). 
+  {disc}: discriminant of the curve. This is only required to be
+ nonzero, not necessarily a unit.
+  {j}: j-invariant of the curve.
+  These are used as follows:
+ 
+ >E = ellinit([0,0,0, a4,a6]);
+ >E.b4
+ %2 = 2*a4
+ >E.disc
+ %3 = -64*a4^3 - 432*a6^2
+ 
+ {Curves over C} 
+ This in particular includes curves defined over Q. All Member Names in
+ this section return data, as it is currently stored in the structure, if
+ present; and otherwise compute it to the default accuracy, that was fixed
+ {at the time of ellinit} (via a {REAL} D domain argument, or
+ {realprecision} by default). The function {ellperiods} allows to
+ recompute (and cache) the following data to {current}
+ {realprecision}.
+  {area}: volume of the complex lattice defining E.
+  {roots} is a vector whose three components contain the complex
+ roots of the right hand side g(x) of the attached b-model Y^2 = g(x).
+ If the roots are all real, they are ordered by decreasing value. If only one
+ is real, it is the first component.
+  {omega}: [\omega_1,\omega_2], periods forming a basis of the
+ complex lattice defining E. The first componentomega_1 is the
+ (positive) real period, in other words the integral of the Neron
+ differential dx/(2y+a_1x+a_3)
+ over the connected component of the identity component of E(\R).
+ The second componentomega_2 is a complex period, such that
+tau=\dfrac{\omega_1}{\omega_2} belongs to Poincare
+ half-plane (positive imaginary part); not necessarily to the standard
+ fundamental domain. It is normalized so thatIm(\omega_2) < 0
+ and eitherRe(\omega_2) = 0, when {E.disc > 0} (E(\R) has two connected
+ components), orRe(\omega_2) =omega_1/2
+  {eta} is a row vector containing the quasi-periodseta_1 and
+eta_2 such thateta_i = 2Zeta(\omega_i/2), where Zeta is the
+ Weierstrass zeta function attached to the period lattice; see
+ {ellzeta}. In particular, the Legendre relation holds:eta_2\omega_1 -
+eta_1\omega_2 = 2\pi i.
+ {Warning} As for the orientation of the basis of the period lattice,
+ beware that many sources use the inverse convention whereomega_2/\omega_1
+ has positive imaginary part and ouromega_2 is the negative of theirs. Our
+ conventiontau =omega_1/\omega_2  ensures that the action of
+ {PSL}_2 is the natural one:
+ [a,b;c,d]Cdot\tau = (a\tau+b)/(c\tau+d)
+   = (aomega_1 + b\omega_2)/(c\omega_1 + d\omega_2),
+ instead of a twisted one. (Ourtau is -1/\tau in the above inverse
+ convention.)
+ {Curves over Q_p} 
+ We advise to input a model defined over Q for such curves. In any case,
+ if you input an approximate model with {PADIC} coefficients, it will be
+ replaced by a lift to Q (an exact model ``close'' to the one that was
+ input) and all quantities will then be computed in terms of this lifted
+ model.
+ For the time being only curves with multiplicative reduction (split or
+ nonsplit), i.e. v_p(j) < 0, are supported by nontrivial functions. In
+ this case the curve is analytically isomorphic to {Q}_p^*/q^Z :=
+ E_q({Q}_p), for some p-adic integer q (the Tate period). In
+ particular, we have j(q) = j(E).
+  {p} is the residual characteristic
+  {roots} is a vector with a single component, equal to the p-adic
+ root e_1 of the right hand side g(x) of the attached b-model Y^2
+ = g(x). The point (e_1,0) corresponds to -1in {Q}_p^*/q^Z
+ under the Tate parametrization.
+  {tate} returns [u^2,u,q,[a,b],Ei,L] in the notation of
+ Henniart-Mestre (CRAS t. 308, p.~391--395, 1989): q is as above,
+ in Q_p(\sqrt{-c_6}) is such thatphi^* dx/(2y + a_1x+a3) = u dt/t,
+ wherephi: E_qto E is an isomorphism (well defined up to sign) and
+ dt/t is the canonical invariant differential on the Tate curve; u^2\inQ_p
+ does not depend onphi. (Technicality: if not\inQ_p, it is stored as a
+ quadratic {POLMOD}.)
+ The parameters [a,b] satisfy 4u^2 b Cdot {agm}(\sqrt{a/b},1)^2 = 1
+ as in Theorem~2 ({loc.~cit.}).
+ {Ei} describes the sequence of 2-isogenous curves (with kernel generated
+ by [0,0]) E_i: y^2=x(x+A_i)(x+A_i-B_i) converging quadratically towards
+ the singular curve E_\infty. Finally, L is Mazur-Tate-Teitelbaum's
+ {Cal L}-invariant, equal tolog_p q / v_p(q).
+ {Curves over Fq} 
+  {p} is the characteristic of Fq.
+  {no} is#E(Fq).
+  {cyc} gives the cycle structure of E(Fq).
+  {gen} returns the generators of E(Fq).
+  {group} returns [{no},{cyc},{gen}], i.e. E(Fq)
+ as an abelian group structure.
+ {Curves over Q} 
+ All functions should return a correct result, whether the model is minimal or
+ not, but it is a good idea to stick to minimal models whenever
+gcd(c_4,c_6) is easy to factor (minor speed-up). The construction
+ 
+   E = ellminimalmodel(E0, &v)
+  replaces the original model E_0 by a minimal model E,
+ and the variable change v allows to go between the two models:
+ 
+   ellchangepoint(P0, v)
+   ellchangepointinv(P, v)
+  respectively map the point P_0 on E_0 to its image on
+ E, and the point P on E to its pre-image on E_0.
+ A few routines --- namely {ellgenerators}, {ellidentify},
+ {ellsearch}, {forell} --- require the optional package {elldata}
+ (John Cremona's database) to be installed. In that case, the function
+ {ellinit} will allow alternative inputs, e.g.~{ellinit("11a1")}.
+ 
+
+*******************
+Functions using this package need to load chunks of a large database in
+ memory and require at least 2MB stack to avoid stack overflows.
+  {gen} returns the generators of E(Q), if known (from John
+   Cremona's database)
+ {Curves over number fields} 
+  {nf} return thevar{nf} structure attached to the number field
+ over which E is defined.
+  {bnf} return thevar{bnf} structure attached to the number field
+ over which E is defined or raise an error (if only anvar{nf} is available).
+  {omega}, {eta}, {area}: vectors of complex periods,
+ quasi-periods and lattice areas attached to the complex embeddings of E,
+ in the same order as {E.nf.roots}.
+subsec{Reduction} 
+ Let E be a curve defined over Q_p given by a p-integral model;
+ if the curve has good reduction at p, we may define its reduction
+{E} over the finite field Fp:
+ 
+ >E = ellinit([-3,1], O(5^10)); \ @com E/Q_5
+ >Et = ellinit(E, 5)
+ >ellcard(Et) \ @com{E}/\F_5 has 7 points
+ %3 = 7
+ >ellinit(E, 7)
+  ***   at top-level: ellinit(E,7)
+  ***                 ^------------
+  *** ellinit: inconsistent moduli in ellinit: 5 != 7
+ 
+ Likewise, if a curve is defined over a number field K and {p} is a
+ maximal ideal with finite residue field Fq, we define the reduction
+{E}/Fq provided E has good reduction at {p}.
+ E/Q is an important special case:
+ 
+ >E = ellinit([-3,1]);
+ >factor(E.disc)
+ %2 =
+ [2 4]
+ [3 4]
+ >Et = ellinit(E, 5);
+ >ellcard(Et)\ @com{E} /F_5 has 7 points
+ %4 = 7
+ >ellinit(E, 3) \ bad reduction at 3
+ %5 = []
+  General number fields are similar:
+ 
+ >K = nfinit(x^2+1); E = ellinit([x,x+1], K);
+ >idealfactor(K, E.disc) \ three primes of bad reduction
+ %2 =
+ [  [2, [1, 1]~, 2, 1, [1, -1; 1, 1]] 10]
+ [ [5, [-2, 1]~, 1, 1, [2, -1; 1, 2]]  2]
+ [[5, [2, 1]~, 1, 1, [-2, -1; 1, -2]]  2]
+ >P = idealprimedec(K, 3);\ a prime of good reduction
+ >idealnorm(K, P)
+ %4 = 9
+ >Et = ellinit(E, P);
+ >ellcard(Et) \ @com{E} /F_9 has 4 points
+ %6 = 4
+ 
+ If the model is not locally minimal at {p}, the above will fail:
+ {elllocalred} and {ellchangecurve} allow to reduce to that case.
+ Some functions such as {ellap}, {ellcard}, {ellgroup} and
+ {ellissupersingular} even implicitly replace the given equation by
+ a local minimal model and consider the group of nonsingular points
+{E}^{ns} so they make sense even when the curve has bad reduction.
+ 
+-------------------------
+ 
