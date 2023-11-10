@@ -1,0 +1,11 @@
+
+Whatever the search method, the result is invariant. 
+After getting approximately "O(b)" curves of rank "b", 
+a curve of rank "b+1" emerges.
+It is a pyramid, a tree. 
+Where the number "O(b)" oscillates continuously.
+It is random. But not entirely. There is a pyramidal order.  
+Observed from infinity it is even a routine order. 
+Looked at closely it is desperate.
+
+-----------------------------------------------------------
