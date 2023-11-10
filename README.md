@@ -2,9 +2,7 @@
 
 (C)2023.Simon Aranda
 
-Many unpublished Elliptic Curves rank +7.
-And some conjectures.
-
+Elliptic Curves rank +7 and some conjectures.
 See DATA for latest news.
 
 
