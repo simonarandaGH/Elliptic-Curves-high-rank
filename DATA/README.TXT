@@ -14,7 +14,7 @@ F   -n0    [-n, 0]                       x
 G   -n+n   [-n,+n]                       none
 H   -n-n   [-n,-n]                       none
 
-TLMS with n^2
+TLMS (with n^2)
 
 L   0+nn   [0,  n^2 ] Mordell curves.    x
 S   0-nn   [0,-(n^2)] "                  x
@@ -31,6 +31,7 @@ Examples
 [ n,0]      2020343 rank 6
 [-n,0]   -188588857 rank 7
 
+[+n,-n]  rank 7.
 [-n,+n]  347251 rank 7.
 
 [+n^2,0] "3305859933" rank 6.
