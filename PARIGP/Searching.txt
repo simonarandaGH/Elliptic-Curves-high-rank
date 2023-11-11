@@ -1,11 +1,61 @@
 
-Whatever the search method, the result is invariant. 
+Conjecture
+"Whatever the search method, the result is invariant". 
+
 After getting approximately "O(b)" curves of rank "b", 
-a curve of rank "b+1" emerges.
-It is a pyramid, a tree. 
+a curve of rank "b+1" emerges. It is a pyramid, a tree. 
 Where the number "O(b)" oscillates continuously.
 It is random. But not entirely. There is a pyramidal order.  
-Observed from infinity it is even a routine order. 
-Looked at closely it is desperate.
+Observed from infinity it is even a.. routine order. 
 
------------------------------------------------------------
+It is a pyramid, a tree
+
+      6
+     5 5
+    4 4 4
+   3 3 3 3
+  2 2 2 2 2
+ 1 1 1 1 1 1 
+0 0 0 0 0 0 0
+------------- 
+1,2,3,4,5,6,7
+
+
+Ell. Curve Rank (Ideal)
+                                     3.........
+            2           2           2..........
+   1   1   1   1   1   1   1   1   1...........
+000 000 000 000 000 000 000 000 000 ...........
+-----------------------------------------------
+27,9,3,1
+                          11
+                        222222
+                  111111111111111111
+0000000000000000000000000000000000000000000000000000
+----------------------------------------------------
+Horizontal view
+
+
+   00
+  (..)
+   00
+   00
+   00
+   00
+  1001
+  1001
+  1001
+  1001
+  1001
+  1001
+ 210012
+ 210012
+32100123
+--------
+function
+--------
+
+Q: how many 0's for one rank(n)=28 ?
+A: count the 0's, count the 1's, etc: you get "n".
+--------------------------------------------------
+
