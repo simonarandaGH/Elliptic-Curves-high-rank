@@ -31,8 +31,8 @@ Examples
 [ n,0]      2020343 rank 6
 [-n,0]   -188588857 rank 7
 
-[+n,-n]  rank 7.
-[-n,+n]  347251 rank 7.
+[+n,-n]  rank 7
+[-n,+n]  rank 7
 
 [+n^2,0] "3305859933" rank 6.
 [-n^2,1]  rank 9 (7 terms). 
