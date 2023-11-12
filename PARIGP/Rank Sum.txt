@@ -1,0 +1,25 @@
+Rank Sum
+--------
+
+The space of elliptic curves can be Z^5, the normal form of 5 Coefficients. This space can be partially examined by parameterising these coefficients with some parameters. Their number will be the dimension of the subspace to be studied. If we limit ourselves to only one parameter "n", we can speak of the curve C[n]. Moreover, we will have an infinite sequence of curves.
+We can define S(n) as the sum of the rank of the curves C[i], i: 1..n.
+If in the chosen subspace there are infinitely many curves of rank 0, in the limit S(n) -> n.
+If there exists a value of minimum rank, S(n) tends to 2n, 3n, etc.
+
+Examples
+
+C[0,n]  S(n)-> n
+     n  S(n)
+   100     75
+  1000    887
+ 10000   9341
+100000  93648
+-------------
+
+C[+n,-n] S(n) -> 2n.
+    n  S(n)
+  100  154
+ 1000  1797
+10000  19012
+------------
+
