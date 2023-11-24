@@ -4,4 +4,43 @@ Counting only integral numbers does not improve the result and takes some extra 
 
 Perhaps the QNR script is smarter.
 
+Example
+QNR over [-n^2,+1]. To rank 11 in only 14 steps.
+
+-------------------------------------------------------------
+(-n^2,+1)  #blk= 10 1000000  gqmin= +oo  qex= 0  nx= 0  rx= 0
+Cut1:  4 / 6 --> 6
+@ellratpoints: 183
+Cut2 8 / 8 --> 8
+HIGH:   (8/1058930/5) ....................
+@ellrank: 1
+
+(-n^2,+1)  #blk= 11 1100000  gqmin= 8  qex= 1  nx= 1058930  rx= 5
+Cut1:  4 / 6 --> 6
+@ellratpoints: 163
+Cut2 8 / 8 --> 8
+HIGH:   (8/1176092/6) ....................
+@ellrank: 1
+
+(-n^2,+1)  #blk= 12 1200000  gqmin= 8  qex= 1  nx= 1176092  rx= 6
+Cut1:  4 / 8 --> 8
+@ellratpoints: 1
+Cut2 8 / 8 --> 8
+EQUAL:  (8/1204302/6) ....................
+@ellrank: 1
+
+(-n^2,+1)  #blk= 13 1300000  gqmin= 8  qex= 2  nx= 1204302  rx= 6
+Cut1:  4 / 6 --> 6
+@ellratpoints: 137
+blk skip:  6 < 8
+
+(-n^2,+1)  #blk= 14 1400000  gqmin= 8  qex= 2  nx= 1204302  rx= 6
+Cut1:  4 / 6 --> 6
+@ellratpoints: 117
+Cut2 8 / 8 --> 8
+HIGH:   (8/1448203/11) ....................
+@ellrank: 1
+
+(-n^2,+1)  #blk= 15 1500000  gqmin= 8  qex= 1  nx= 1448203  rx= 11
+------------------------------------------------------------------
 
