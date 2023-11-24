@@ -1,10 +1,8 @@
-P [-n^2,+1] Rank 9.
-(C)Oct.2023.Simon Aranda
-
-The form P gives curves with moderate rank at low values of "n". Released short PARIGP example.
+[-n^2,+1] Rank 9.
+(C)Oct2023.Simon Aranda
+The form gives curves with moderate rank at low values of "n". 
 
 OUTPUT
-
 11416 [130325056,1] rank=9
 11416
 16228
@@ -15,39 +13,40 @@ OUTPUT
 59317
 =====
 
+11416    Rank= [9, 9]
+Generators:
+1 [-9426, 625259]
+2 [-9665, 597296]
+3 [-1574, 448589]
+4 [26918, 3999515]
+5 [11450, 94349]
+6 [-5600, 744449]
+7 [-7070, 753661]
+8 [-10396, 480929]
+9 [-1090, 375179]
 
-PARIGP
-(C)Oct2023.Simon Aranda
+16228    Rank= [9, 9]
+Generators:
+1 [-4362, 1032341]
+2 [-16228, 1]
+3 [-1, 16228]
+4 [-12180, 1183489]
+5 [43522, 8424749]
+6 [0, 1]
+7 [-1556, 637183]
+8 [-1086, 533587]
+9 [88844, 26035967]
 
-rank(a,b)=
-{
-if(a==0 && b==0,return(0););
-e=ellinit([a,b]);if(#e<1,return(0););
-mm=ellminimalmodel(e);if(#mm<1,return(0););
-ellrankinit(mm);
-v=ellrank(mm);r=v[1];
-return(r);
-}
+22226    Rank= [9, 9]
+Generators:
+1 [-8804, 1914871]
+2 [-22224, 44449]
+3 [33134, 4473089]
+4 [0, 1]
+5 [-1666, 904639]
+6 [-16366, 1923839]
+7 [-1, 22226]
+8 [-18956, 1597721]
+9 [-445, 468764]
+====================
 
-\\main
-{
-rx=0;ite=0;
-for(a=1,oo,
-    g= a^2;A=g;B=1;
-    r=rank(-A,+B);
-    ite++;
- 
-    if(r==rx,
-      print;
-      printsep(" ",ite,"aABr",a,A,B,rx,"<--EQ--");
-      ite=0;
-      );
-    
-    if(r>rx,
-      rx=r;
-      print;
-      printsep(" ",ite,"aABr",a,A,B,rx,"<-HIGH--");
-      ite=0;
-      );
-  );
-}
