@@ -1,0 +1,6 @@
+The first attached script searches for high range curves. It gets the number of rational points below a certain height. And calculates the rank of those above a certain minimum value. With this script curves of rank +10 have been found.
+
+Counting only integral numbers does not improve the result and takes some extra time. The critical point is the value of the maximum height. A correct value like 2*n is slow. A constant for all n does not work. The algorithm has several adjustable points to handle this problem.
+
+Perhaps the QNR script is smarter.
+
