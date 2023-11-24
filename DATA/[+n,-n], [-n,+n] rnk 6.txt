@@ -1,8 +1,5 @@
-CG Curves
+rnk(+n,-n); rnk(-n,+n);
 (C)2023.Simon Aranda
-
-C=rank(+n,-n);
-G=rank(-n,+n);
 
 n< 10^5. Rank 6
 ===============
