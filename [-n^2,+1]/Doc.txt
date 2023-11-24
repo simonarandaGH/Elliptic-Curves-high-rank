@@ -4,3 +4,4 @@ Counting only integral numbers does not improve the result and takes some extra 
 
 Perhaps the QNR script is smarter.
 
+
