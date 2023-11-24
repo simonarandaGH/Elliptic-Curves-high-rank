@@ -1,20 +1,13 @@
-TLMS rank 4 curves
-+250 terms
+Some rank 4 curves. +250 terms.
 (C)2023.Simon Aranda
 --------------------
+Fam:
+T= (+n^2,0);        L= (0,+n^2);
+M= (-n^2,0);        S= (0,-n^2);
 
-inside PARIGP script
-        n2=n^2;
-T=  rank(n2,0);
-L=  rank(0,n2);
-M= rank(-n2,0);
-S= rank(0,-n2);
-ellinit([a,b]);
-
-Output
-MT relation
-M      n 4  T    n/2 4
----------------------- 
+M-T relation:      
+       n r       n/2 r
+----------  ---------- 
 M  29274 4  T  14637 4
 M  46274 4  T  23137 4
 M  46754 4  T  23377 4
@@ -24,17 +17,6 @@ M 187016 4  T  93508 4
 M 230860 4  T 115430 4
 M 263466 4  T 131733 4
 ----------------------
-
-LS rank 5
-L  262849 5
-S  293410 5
-
-TLMS rank 4 data
-Observed here:
-- S curves: small numbers.
-- Unique powers: 2, 3, 5. Only zero/one power per number.
-- 90% numbers are squarefree.
-But for big numbers conjectured more powers.
 
 
 OUTPUT
@@ -319,4 +301,4 @@ S  349466 4
 S  355282 4
 S  359084 4
 S  363662 4
-=================
+===========
