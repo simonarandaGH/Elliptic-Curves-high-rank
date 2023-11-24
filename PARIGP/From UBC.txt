@@ -1,0 +1,90 @@
+From UBC
+Congruent forms
+(Ref)2023.Simon Aranda
+
+- Congruent forms mod 8:
+p5, p7                       are congruent numbers.
+2p7, 2p3, p3q7, 2p3q5, 2p5q7 are CN.
+
+- Not congruent forms mod 8:
+p3                is not a cn.
+p3q3, 2p5, 2p5q5 are not cn.
+
+- Let x,y positive integers. Then are CN:
+n = 1*x^4 + 4*y^4.    n = 2*x^4 + 2*y^4.
+n = 1*x^4 - 1*y^4.
+
+- The curve  (w^2 = t^4 + 14t^2 + 4)
+has infinitely many rational points. 
+Let some rational solution (t, w) with t not zero. 
+Set t= u/v; With u,v coprimes.
+Define n as:
+n = 6*(1*u^4 + 2*u^2*v^2 + 4*v^4)*(1*u^4 + 8*u^2*v^2 + 4*v^4)
+then the curve C[n] as rank 3 or more. Example:
+42486               3 
+25514648349059526   3 
+
+Example of (n= _7 mod 8)
+4199 rank 3
+4895 rank 3
+6671 rank 3
+9015 rank 3
+
+Example n= 2 * _5 * _3
+7230  rank  3
+12270 r     3
+24190 r     3
+30270 r     3
+
+Example of 2*_5*_7
+9430  rank 3
+31350 r    3
+
+Example of a^4 + 4*b^4
+n=339738625 rank 4
+n=368947345 r    4
+
+Example of a^4 - b^4
+37791     rank 3
+65535     r    3
+104975    r    3
+
+- Let integers a, b ,k; (a, b) opposite parity. And define:
+    n*k^2 = (1*a^4 + 6*a^2*b^2 + 1*b^4)
+or  n*k^2 = (1*a^4 - 6*a^2*b^2 + 1*b^4)
+Then "n" is a congruent number.
+
+
+Basic nomenclature
+
+Every congruent number "n" is of the form 
+    n*k^2 = u*v*(u^2 − v^2)
+with k, u, v positive integers.
+
+Group law.
+E(Q)  Set of rational points on an elliptic curve.
+P + Q     = Q + P         (commutative)
+P + O     = O + P     = P (identity element O)
+P + (−P)  = (−P) + P  = O (inverses)
+(P + Q) + R = P + (Q + R) (associative)
+(O)  Point at infinity on an elliptic curve
+(−P) is the reflection of P about the x-axis.
+
+On congruent curves, E(Q)= [Z/2Z x 2/2Z] x Z^rank
+Torsion points: 4, finite order, order 2.
+Not-torsion point: infinite order.
+
+Nomenclature
+a|b   Divides
+Z+    Set of positive integers {1, 2, 3,}
+      Set of non-zero rational numbers 
+Q2    Set of squares of rational numbers
+
+
+
+Reference
+CN and Elliptic curves.2010
+Published by J. Johnstone
+University of British Columbia
+College of Mathematics
+
