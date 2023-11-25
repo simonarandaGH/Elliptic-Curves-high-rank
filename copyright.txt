@@ -1,4 +1,4 @@
-OEIS Community
+OEIS Community.
 After the temporary locking of my OEIS account I have tried to individually extend those sequences 
 where the data in the OEIS might be at a level below my current computing power. 
 I encourage all volunteer editors in the OEIS Community 
