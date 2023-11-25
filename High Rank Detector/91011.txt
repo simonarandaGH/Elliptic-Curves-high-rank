@@ -1,5 +1,9 @@
+Curve coeff [-2,-1,0,-1,n^2]
 
-\\ coeff [-2,-1,0,-1,n^2];
-/ 423515/09
-/ 765617/10
-/1448203/11
+New values from the version 2 of Detector script.
+
+      n Rank
+ 423515 09
+ 765617 10
+1448203 11
+==========
