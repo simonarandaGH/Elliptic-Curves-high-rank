@@ -1,1 +1,14 @@
+Detector
+High rank elliptic curve detector
+2 phase closed loop detector.
+(C)Nov2023.Simon Aranda
+
+Let's take a point "n" as a fixed reference.
+In the vicinity of this point, the number of rational points "q" returned by @ellratpoints is proportional to the rank of the curve, with the setting of parameter "h" at a constant value.
+Surrounding "n" excludes cases like: 1,2,3 (4) 5,6,7; since the ratio grows. It is instead followed by: (900..1000..1100)
+This value "q" is an Effective differentiator and several scripts of this repo are based on this assumption. However, the process must be fine-tuned.
+A higher h-value means more processing time. A lower one may not discriminate. The same h-value is not valid for all numbers. Larger numbers require a larger value.
+The ideal form of progress would be:
+900-1000-1100, 1100-1200-1300, etc.
+Where the centre point allows the adjusting of the "h".
 
