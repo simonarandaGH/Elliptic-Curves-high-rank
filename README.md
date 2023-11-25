@@ -1,4 +1,4 @@
-# Elliptic-Curves Short form
+# Elliptic-Curves High rank
 (C)2023.Simon Aranda
 
 Elliptic Curves and some conjectures.
