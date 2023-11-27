@@ -4,5 +4,5 @@
 Elliptic Curves and some conjectures.
 Some curves rank +10.
 PARI/GP scripts.
-See DATA for latest news.
+See repo for latest news.
 
