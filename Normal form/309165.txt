@@ -1,0 +1,32 @@
+Seq Oeis 309165.	
+"Least k" such that the rank of the elliptic curve 
+y^2 = x * (x+1) * (x-k) is n.		
+Author: Seiichi Manyama, 2019.
+
+"This curve is birationally equivalent to 
+concordant equation: x^2+y^2=z^2, x^2+n*y^2=w^2.
+H. Mishima.
+
+DATA
+n       rank
+----    ----
+1       0
+6       1
+88      2
+3630    3
+....
+1038600 4. (SimonAranda Nov2023, LEAST? rank 4)
+
+
+PARIGP 
+
+n=10386
+e=ellinit([0,-100*n+1,0,-100*n,0]);
+ellrank(e)
+[4, 4, 0, [
+[-225/289, 2079000/4913]
+, [-120/961, 10036320/29791]
+, [-19360/25921, 1849217040/4173281]
+, [33304416/25, 90226214736/125]
+]]
+
