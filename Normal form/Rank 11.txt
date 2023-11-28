@@ -1,5 +1,5 @@
 Coef: [-2,-1,0,-1,+n^2] 
-Eqn: y^2 -2xy -x^2 = x^3 -x +n^2
+Eqn: y^2 -2xy +x^2 = x^3 -x +n^2
 Never rank 0. Fixed points: (-1,n-1), (+1,n+1), (0,n).
 
       n  rank
